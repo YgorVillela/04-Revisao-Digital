@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="corpo">
+    <div th:if="@{msg != null}" th:text="${msg}" class="alert alert-success"></div>
+
+    <h1>Lista de Hotéis</h1>
+
+    <table class="table">
+        <tr>
+            <th>Nome:</th>
+            <th>Aceita animal?</th>
+            <th>Data de Abertura:</th>
+        </tr>
+
+        <tr th:each="hotel:${lista}">
+            <td th:text="${hotel.nome}"></td>
+            <td th:text="${hotel.dataAbertura}"></td>
+            <td th:text="${hotel.aceitaAnimais?'Sim' : 'Não'}"></td>
+
+            <td>
+                <a th:href="@{/hotel/atualizar/}+${hotel.codigo}"
+                   class="btn btn-outline-primary btn-sm">Editar</a>
+            </td>
+
+            <td>
+                <button th:onclick="|codigo.value=${hotel.codigo}|" type="button" class="btn btn-danger btn-sm"
+                        data-toggle="modal" data-target="#modalExemplo">Excluir</button>
+            </td>
+        </tr>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Deseja realmente excluir o animal?
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <form th:action="@{/hotel/deletar}" method="post">
+                            <input type="hidden" name="codigo" id="codigo">
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                            <button type="submit" class="btn btn-danger">Sim</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </table>
+
+
+</div>
+</body>
+</html>

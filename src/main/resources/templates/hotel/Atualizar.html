@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+</head>
+<body>
+<div layout:fragment="corpo">
+    <h1>Cadastro hotel</h1>
+
+    <div class="alert alert-success" th:if="${msg != null}" th:text="${msg}"></div>
+    <form th:action="@{/hotel/atualizar}" th:object="${hotel}" method="post">
+
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input th:field="*{nome}" id="nome" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Data Abertura</label>
+            <input th:field="*{dataAbertura}" class="form-control" type="text">
+        </div>
+
+        <div class="form-group">
+            <label>Aceita animais?</label>
+            <input th:field="*{aceitaAnimais}" type="checkbox">
+        </div>
+
+        <button class="btn btn-success">atualizar</button>
+
+    </form>
+</div>
+</body>
+</html>
